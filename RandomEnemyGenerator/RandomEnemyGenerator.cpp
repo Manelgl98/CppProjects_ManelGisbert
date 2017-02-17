@@ -3,8 +3,10 @@
 
 #include "stdafx.h"
 #include<string>
-#include<stdlib.h>
+#include<ctime>
+#include<iostream>
 
+const int cantidad = 5;
 
 
 enum EnemyType {zombie,vampire,ghost,witch};
@@ -24,14 +26,22 @@ bool operator ==(Enemy a,Enemy b) {
 	}
 }
 
-Enemy CreateRandomEnemy() {
+Enemy CreateRandomEnemy(Enemy create[]) {
+	
 	srand(time(NULL));
 
-
+	for (int i = 0; i < cantidad; i++) {
+		create[i].type = (EnemyType)rand() % 5;
+		create[i].name = (char) rand() % 201;
+		create[i].health = (int)rand() % 101;
+	}
+	
 }
 
 int main()
 {
+	Enemy gen[cantidad];
+	
     return 0;
 }
 
