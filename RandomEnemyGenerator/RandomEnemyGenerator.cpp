@@ -3,19 +3,13 @@
 
 #include "stdafx.h"
 #include<string>
-#include<stdlib.h>
+#include<ctime>
 #include<iostream>
-#include<time.h>
+
+const int cantidad = 5;
 
 
-
-enum EnemyType {
-	ZOMBIE,
-	VAMPIRE,
-	GHOST,
-	WITCH,
-	MAX
-};
+enum EnemyType {zombie,vampire,ghost,witch};
 struct Enemy
 {
 	EnemyType type;
@@ -23,59 +17,31 @@ struct Enemy
 	int health;
 };
 
-bool operator==(const Enemy &a,const Enemy &b) {
-	return a.name == b.name && a.type == b.type;
+bool operator ==(Enemy a,Enemy b) {
+	if (a.type == b.type && a.name == b.name ) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
-static Enemy CreateRandomEnemy() {
-	static const int MAX_LIFE{ 500 };
-	static const std::string NAMES[]{
-		"Gertrudiz",
-		"Pancracia",
-		"Anacleto",
-		"Hipolito",
-		"Eustaquio",
-		"Fulgencia"
-	};
-	return Enemy{
-		static_cast<EnemyType>(rand() % static_cast<int>(EnemyType::MAX)),
-		NAMES[rand() % (sizeof NAMES / sizeof std::string)],
-		rand() % MAX_LIFE
-	};
-}
+Enemy CreateRandomEnemy(Enemy create[]) {
+	
+	srand(time(NULL));
 
+	for (int i = 0; i < cantidad; i++) {
+		create[i].type = (EnemyType)rand() % 5;
+		create[i].name = (char) rand() % 201;
+		create[i].health = (int)rand() % 101;
+	}
+	
+}
 
 int main()
 {
-	srand(static_cast<unsigned>(time(nullptr)));
-	const int MAX_ENEMIES{ 5 };
-	Enemy enemies[MAX_ENEMIES];
-	{
-	int i{ 0 };
-	while (i < MAX_ENEMIES)
-	{
-		enemies[i] = CreateRandomEnemy();
-		int j{ i - 1 };
-		while (j >= 0)
-			if (enemies[i] == enemies[j])
-			{
-				--i;
-				break;
-			};
-		j--;
-	};
-	++i;
-	}
-
-}
-
-std::cout << "List of enemies:\n";
-for (auto &enemy : enemies)
-{
-	std::cout << enemy.name <<
-		"is a" << enemy.getEnemyTypeString() <<
-		"whose life is" << enemy.health << std::endl;
-}
-return 0;
+	Enemy gen[cantidad];
+	
+    return 0;
 }
 
