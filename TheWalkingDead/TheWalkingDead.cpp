@@ -55,19 +55,17 @@ bool Player::isAlive(Player& p) {
 
 void Zombie::attack(Player& p) {
 	if (distanceToPlayer <= 0) {
-		p.life -= ;
+		p.life -= damange;
+	}
+	else {
+		distanceToPlayer--;
 	}
 }
 void Player::randGenerator() {
 	
 }
 void Zombie::randGenerator() {
-	Zombie{
-	rand() % 201,
-	rand() % 21,
-	rand() % 21,
-	rand()%101
-	};
+	
 }
 	
 
@@ -81,7 +79,7 @@ int main()
 	while (player.life && zombie > 1) {
 		zombiesAreAlive = false;
 		for (int i = 0; i < 10; i++) {
-			
+			void attack();
 		}
 
 	}
