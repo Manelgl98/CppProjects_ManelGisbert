@@ -38,7 +38,7 @@ DynArray::DynArray(int *arr, size_t size) :
 void DynArray:: push(const int &val) {
 	if (m_capacity > m_size) {
 		m_data[m_size] = val;
-		m_size++;
+	
 	}
 	else
 	{
