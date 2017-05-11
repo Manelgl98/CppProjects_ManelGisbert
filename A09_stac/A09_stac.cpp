@@ -84,7 +84,7 @@ void main()
 	s4.push("goodbye");
 	s4.push("bye");
 
-	putHad(s3,s4);
+	putHat(s3,s4);
 	
 	
 }

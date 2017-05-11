@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STLdequeQueuePriorydeque", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A09_stac", "A09_stac\A09_stac.vcxproj", "{5A1CECB5-603F-43A4-8862-BBED80364F47}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A10STLlist", "A10STLlist\A10STLlist.vcxproj", "{8D17B936-7402-4F48-A755-E41348483507}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -91,6 +93,14 @@ Global
 		{5A1CECB5-603F-43A4-8862-BBED80364F47}.Release|x64.Build.0 = Release|x64
 		{5A1CECB5-603F-43A4-8862-BBED80364F47}.Release|x86.ActiveCfg = Release|Win32
 		{5A1CECB5-603F-43A4-8862-BBED80364F47}.Release|x86.Build.0 = Release|Win32
+		{8D17B936-7402-4F48-A755-E41348483507}.Debug|x64.ActiveCfg = Debug|x64
+		{8D17B936-7402-4F48-A755-E41348483507}.Debug|x64.Build.0 = Debug|x64
+		{8D17B936-7402-4F48-A755-E41348483507}.Debug|x86.ActiveCfg = Debug|Win32
+		{8D17B936-7402-4F48-A755-E41348483507}.Debug|x86.Build.0 = Debug|Win32
+		{8D17B936-7402-4F48-A755-E41348483507}.Release|x64.ActiveCfg = Release|x64
+		{8D17B936-7402-4F48-A755-E41348483507}.Release|x64.Build.0 = Release|x64
+		{8D17B936-7402-4F48-A755-E41348483507}.Release|x86.ActiveCfg = Release|Win32
+		{8D17B936-7402-4F48-A755-E41348483507}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
