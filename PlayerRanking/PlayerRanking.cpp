@@ -1,32 +1,46 @@
-// PlayerRanking.cpp : Defines the entry point for the console application.
-//
+﻿#include <iostream>​
+#include <map>
+#include <string>
 
-#include "stdafx.h"
-#include<map>
+void main() {
+	typedef std::map<std::string, int> DicPlayer;
+	DicPlayer players;
+	players["Paco73"] = 500;
+	players["DontKillMePlease"] = 670;
+	players["ElPutoAmo"] = 14;
+	players["Anonimus67_Ramon_Garcia"] = 500;
+	bool correctName;
 
-struct player {
-	std::map<std::string, int>player;
-};
+	do {
+		std::cout << "Introduce name and puntuation: " << std::flush;
+		std::string name;
+		int points;
+		std::cin >> name >> points;
+		auto it = players.find(name);
+		if (it != players.end()) {
+			std::cout << "The username is taken" << std::endl;
+			correctName = false;
+		}
+		else {
+			players[name] = points;
+			correctName = true;
+		}
+	} while (!correctName);
 
-std::map<std::string, int>player0;
-std::map<std::string, int>playerd1;
-std::map<std::string, int>playerd2;
-std::map<std::string, int>playerd3;
-std::map<std::string, int>playerd4;
-
-void solicitatePlayer() {
-	
+	//report
+	std::string name;
+	int points = 0;
+	DicPlayer tmp(players);
+	while (tmp.size() > 0) {
+		//busco el mas grande
+		for (DicPlayer::iterator it = tmp.begin(); it != tmp.end(); it++) {
+			if (it->second > points) {
+				name = it->first;
+				points = it->second;
+			}
+		}
+		std::cout << name << " with " << points << std::endl;
+		//elimino el encontrado
+		players.erase(players.find(name));
+	}
 }
-int main()
-{
-	player0["Pepito"];
-	playerd1["Juan"] = 1200;
-	playerd2["Laura"] = 2000;
-	playerd3["Oscar"] = 10;
-	playerd4["Javi"] = 1250;
-	
-
-	
-    return 0;
-}
-
