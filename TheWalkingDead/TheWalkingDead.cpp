@@ -1,83 +1,117 @@
-// TheWalkingDead.cpp : Defines the entry point for the console application.
-//
-
+#include "stdafx.h"
 #include <iostream>
 #include <string>
 #include <ctime>
-
-
-enum class Weapon {
-	FISTS, GUN, SHOTGUN, REVOLVER, SNIPER, MACHINE_GUN, MAX
+enum class Weapon
+{
+	FISTS,
+	GUN,
+	SHOTGUN,
+	REVOLVER,
+	SNIPER,
+	MACHINE_GUN,
+	MAX
 };
-
-class Zombie;//Forward Declaration 
-
-class Player {
+std::ostream& operator<< (std::ostream &os, const Weapon &weapon) {
+	switch (weapon) {
+	case Weapon::GUN: return os << "gun";
+	case Weapon::SHOTGUN: return os << "shotgun";
+	case Weapon::REVOLVER: return os << "revolver";
+	case Weapon::SNIPER: return os << "sniper";
+	case Weapon::MACHINE_GUN: return os << "machine gun";
+	default: return os << "fists";
+	}
+}
+class Zombie;
+class Player
+{
 public:
 	Weapon weapon;
 	float precision;
 	int life;
-	void attack(Zombie &);
-	bool isAlive() {
-		return Player::life > 0;
-	}
-	Player() : weapon{ Weapon(rand() % int(Weapon::MAX)) }, precision{ ((rand() % 10) / 10.0f) }, life{ 100 } {
-	};
+	Player() :
+		weapon(static_cast<Weapon>(rand() % static_cast<int>(Weapon::MAX))),
+		precision((rand() % 10) / 10.f),
+		life(100) {};
+	Player(const Weapon &t_weapon, float t_precision, int t_life) :
+		weapon(t_weapon),
+		precision(t_precision),
+		life(t_life) {};
+	void attack(Zombie &zombie) const;
+	bool isAlive() const;
 };
-
-class Zombie {
+class Zombie
+{
 public:
-	int distance_player;
+	int distanceToPlayer;
 	float speed;
 	float damage;
 	int life;
-	void Attack(Player &p) {
-		if (distance_player <= 0) {
-			p.life -= damage;
-		}
-		else {
-			distance_player--;
-		}
-	};
-	bool isAlive() {
-		return Zombie::life > 0;
-	}
-	Zombie() : distance_player{ 120 }, life{ 100 }, speed{ 100 }, damage{ 20 } {
-	};
+	Zombie() :
+		distanceToPlayer(rand() % 180 + 20),
+		speed((rand() % 20) / 10.f),
+		damage((rand() % 20) / 10.f),
+		life(100) {};
+	Zombie(int t_distanceToPlayer, float t_speed, float t_damage, int t_life) :
+		distanceToPlayer(t_distanceToPlayer),
+		speed(t_speed),
+		damage(t_damage),
+		life(t_life) {};
+	void attack(Player &player);
+	bool isAlive() const;
 };
-
-void Player::attack(Zombie &z) {
-	z.life -= int(weapon) * precision;
+void Player::attack(Zombie &zombie) const
+{
+	zombie.life -= static_cast<int>(static_cast<int>(weapon) * precision);
 }
-
-void main() {
-	srand(time(nullptr));
+bool Player::isAlive() const
+{
+	return life > 0;
+}
+void Zombie::attack(Player &player)
+{
+	if (distanceToPlayer <= 0)
+		player.life -= static_cast<int>(damage);
+	else
+		distanceToPlayer--;
+}
+bool Zombie::isAlive() const
+{
+	return life > 0;
+}
+int main()
+{
+	srand(static_cast<unsigned>(time(nullptr)));
 	Player player;
-	int const numerodezombies = 10;
-	Zombie arrayzombies[numerodezombies];
-	bool ZombiesAreAlive;
-
+	const int MAX_ZOMBIES{ 10 };
+	Zombie zombies[MAX_ZOMBIES];
+	std::cout << "Player\n\tinitial life: " << player.life <<
+		", weapon: " << player.weapon <<
+		", precision: " << player.precision << std::endl;
+	std::cout << "ZOMBIES ARE COMING!" << std::endl;
+	bool zombiesAreAlive;
 	do {
-		ZombiesAreAlive = false;
-		std::cout << "Player\n" << " your life :" << player.life << " your aim :" << player.precision;
-		for (int i = 0; i<numerodezombies; i++) {
-			if (arrayzombies[i].isAlive()) {
-				player.attack(arrayzombies[i]);
-				std::cout << "Zombie\n" << " zombie life" << arrayzombies[i].life << " zombie damage" << arrayzombies[i].damage << " zombie speed" << arrayzombies[i].speed << " zombie distance" << arrayzombies[i].distance_player;
-				if (arrayzombies[i].isAlive()) {
-					arrayzombies[i].Attack(player);
-					ZombiesAreAlive = true;
-				}
+		zombiesAreAlive = false;
+		std::cout << "Player\n\tlife: " << player.life << std::endl;
+		for (int i{ 0 }; i < MAX_ZOMBIES; ++i)
+		{
+			std::cout << "Zombie[" << i <<
+				"]\n\tlife: " << zombies[i].life <<
+				", distance: " << zombies[i].distanceToPlayer <<
+				", speed: " << zombies[i].speed <<
+				", damage: " << zombies[i].damage << std::endl;
+			if (zombies[i].isAlive())
+			{
+				player.attack(zombies[i]);
+				zombies[i].attack(player);
+				zombiesAreAlive = true;
 			}
 		}
-
-	} while (player.isAlive() && ZombiesAreAlive);
-	if (ZombiesAreAlive) {
-		std::cout << "GAME OVER";
-	}
+		std::cout << "-----------------------------------" << std::endl;
+	} while (player.isAlive() && zombiesAreAlive);
+	if (zombiesAreAlive)
+		std::cout << "GAME OVER: Zombies ate the player's brain!" << std::endl;
 	else
-	{
-		std::cout << "U WIN!";
-	}
-
+		std::cout << "GAME OVER: Player killed all the zombies!" << std::endl;
+	return 0;
 }
